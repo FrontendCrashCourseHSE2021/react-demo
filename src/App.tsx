@@ -105,6 +105,7 @@ function App() {
                 {/*Вывод данных о профиле пользователя (используем фигурные скобки!)*/}
                 <span>{person.firstName} {person.secondName}</span>
 
+                Пример компоненты с состоянием
                 <Clicker/>
 
                 <Row>
