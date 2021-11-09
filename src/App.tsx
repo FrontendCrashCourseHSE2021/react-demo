@@ -3,7 +3,6 @@ import './App.css';
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import {MyNavbar} from "./MyNavbar";
 import {NewsArticleView} from "./NewsArticleView";
-import {Timer} from "./Timer";
 import {Clicker} from "./Clicker";
 
 /**
@@ -105,7 +104,7 @@ function App() {
                 {/*Вывод данных о профиле пользователя (используем фигурные скобки!)*/}
                 <span>{person.firstName} {person.secondName}</span>
 
-                Пример компоненты с состоянием
+                {/*Пример компоненты с состоянием*/}
                 <Clicker/>
 
                 <Row>
