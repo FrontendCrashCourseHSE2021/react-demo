@@ -1,57 +1,133 @@
 import React from 'react';
 import './App.css';
-import {Button, Card, Col, Container, Nav, Navbar, NavDropdown, Row} from "react-bootstrap";
+import {Button, Card, Col, Container, Row} from "react-bootstrap";
+import {MyNavbar} from "./MyNavbar";
+import {NewsArticleView} from "./NewsArticleView";
+import {Timer} from "./Timer";
+import {Clicker} from "./Clicker";
+
+/**
+ * Класс для данных про новость.
+ */
+export class NewsArticle {
+
+    title: string;
+
+    shortText: string;
+
+    image: string;
+
+    constructor(title: string, shortText: string, image: string) {
+        this.title = title;
+        this.shortText = shortText;
+        this.image = image;
+    }
+}
+
+/**
+ * Класс для данных о профиле пользователя
+ */
+class Person {
+
+    firstName: string;
+
+    secondName: string;
+
+    constructor(firstName: string, secondName: string) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+    }
+}
 
 function App() {
-  return (
-      <div>
-          <Navbar bg="light" expand="lg">
-              <Container>
-                  <Navbar.Brand href="#home">React Demo</Navbar.Brand>
-                  <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                  <Navbar.Collapse id="basic-navbar-nav">
-                      <Nav className="me-auto">
-                          <Nav.Link href="#">Home</Nav.Link>
+    // Как взаимодействуют сервер, фронтенд и база данных
+    // DB <-> Backend <-> Frontend
 
-                          <Nav.Link href="#">Link</Nav.Link>
+    // Обычная функция
+    function foobar(idx: number) {
+        console.log("asdasd");
+        return idx + 1;
+    }
 
-                          <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                              <NavDropdown.Item href="#">Test</NavDropdown.Item>
-                              <NavDropdown.Divider />
-                              <NavDropdown.Item href="#">Another test</NavDropdown.Item>
-                          </NavDropdown>
-                      </Nav>
-                  </Navbar.Collapse>
-              </Container>
-          </Navbar>
+    // Стрелочная функция, которая ведёт себя так же как обычная (но запись немного удобнее)
+    let foobar2 = (idx: number) => {
+        console.log("asdasd");
+        return idx + 1;
+    };
 
-          <Container>
-              <Row>
-                  <Col>
-                      <Card style={{ width: '18rem' }}>
-                          <Card.Img variant="top" src="https://engineering.fb.com/wp-content/uploads/2016/09/gjak3qbrgsjmr1afaaaaaada9cc2bj0jaaab.jpg" />
-                          <Card.Body>
-                              <Card.Title>Card Title</Card.Title>
-                              <Card.Text>
-                                  Some quick example text to build on the card title and make up the bulk of
-                                  the card's content.
-                              </Card.Text>
-                              <Button variant="primary">Go somewhere</Button>
-                          </Card.Body>
-                      </Card>
-                  </Col>
-              </Row>
+    let array = [1, 2, 3];
 
-              <br/>
+    // Пример использования функции map (для получения массива, где каждый элемент в два раза больше, чем в оригинальном)
+    let arrayX2 = array.map(value => value * 2);
 
-              <Row>
-                  <Col>
-                      <Button variant={"primary"} onClick={() => alert(1)}>test</Button>
-                  </Col>
-              </Row>
-          </Container>
-      </div>
-  );
+
+    // Создаём фейковые данные (mock'и)
+    let article1 = new NewsArticle(
+        "Lorem ipsum",
+        "asdasdsadasd",
+        "https://engineering.fb.com/wp-content/uploads/2016/09/gjak3qbrgsjmr1afaaaaaada9cc2bj0jaaab.jpg"
+    );
+
+    let article2 = new NewsArticle(
+        "Foo bar",
+        "asdasdaslkdfgl;kdfgkdfjgkldfjgv",
+        "https://engineering.fb.com/wp-content/uploads/2016/09/gjak3qbrgsjmr1afaaaaaada9cc2bj0jaaab.jpg"
+    );
+
+    let article3 = new NewsArticle(
+        "Foo bar 123123123",
+        "asdasdaslkdfgl;kdfgkdfjgkldfjgv",
+        "https://engineering.fb.com/wp-content/uploads/2016/09/gjak3qbrgsjmr1afaaaaaada9cc2bj0jaaab.jpg"
+    );
+
+    // как бы мы это делали с настоящим сервером
+    // let articles: NewsArticle[] = requestToServer();
+
+    // Список всех новостей
+    let articles = [article1, article2, article3];
+
+
+    // Создаём фейкового пользователя (снова mock)
+    let person = new Person("Ivan", "Ivanov");
+
+    function doSomethingOnClick() {
+        console.log("asd");
+        alert("Hello!");
+    }
+
+    return (
+        <div>
+            {/*Компонента с хедером страницы*/}
+            <MyNavbar/>
+
+            <Container>
+
+                {/*Вывод данных о профиле пользователя (используем фигурные скобки!)*/}
+                <span>{person.firstName} {person.secondName}</span>
+
+                <Clicker/>
+
+                <Row>
+                    {/*С помощью функции map превращаем каждую новость в компоненту NewsArticleView*/}
+                    {
+                        articles.map(element => {
+                            return (
+                                <NewsArticleView article={element}/>
+                            );
+                        })
+                    }
+                </Row>
+
+                <br/>
+
+                <Row>
+                    <Col>
+                        <Button variant={"primary"} onClick={() => doSomethingOnClick()}>test</Button>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
+    );
 }
 
 export default App;
